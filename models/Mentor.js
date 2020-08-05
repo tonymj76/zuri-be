@@ -1,9 +1,5 @@
-const mongoose = require('mongoose');
-const uniqueValidator = require('mongoose-unique-validator');
-
-const { Schema } = mongoose;
-
-const mentorSchema = Schema({
+// what is common between the two mentors
+exports.MentorObject = {
   firstName: {
     type: String,
     required: true
@@ -59,9 +55,4 @@ const mentorSchema = Schema({
   interest: {
     type: String
   }
-}, {
-  timestamps: true
-});
-mentorSchema.plugin(uniqueValidator);
-
-module.exports = mongoose.model('Mentors', mentorSchema);
+};
