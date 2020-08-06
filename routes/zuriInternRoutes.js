@@ -1,10 +1,9 @@
 const express = require('express');
 const {
-    getAllInterns
+  getAllInterns
 } = require('../controller/zuriInternController');
 
 const router = express.Router();
-
 
 router.get('/intern', getAllInterns);
 

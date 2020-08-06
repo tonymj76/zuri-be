@@ -1,35 +1,35 @@
-const { responseHandler } = require("../utils/responseHandler");
-const Interns = require("../models/ZuriInternModel");
-const Admin = require("../models/Admin");
-const Mentor = require("../models/ZuriInternMentorModel");
+const { responseHandler } = require('../utils/responseHandler');
+const Interns = require('../models/ZuriInternModel');
+const Admin = require('../models/Admin');
+const Mentor = require('../models/ZuriInternMentorModel');
 
 const internMentorApplicationStatusStatistics = (req, res, next) => {
   const approved = {
     mentors: 0,
-    interns: 0,
+    interns: 0
   };
 
   const pending = {
     mentors: 0,
-    interns: 0,
+    interns: 0
   };
 
   const declined = {
     mentors: 0,
-    interns: 0,
+    interns: 0
   };
 
   Interns.find({})
     .then((interns) => {
       if (interns.length) {
         const approvedInterns = interns.filter(
-          (intern) => intern.applicationState === "accepted"
+          (intern) => intern.applicationState === 'accepted'
         ).length;
         const declinedInterns = interns.filter(
-          (intern) => intern.applicationState === "declined"
+          (intern) => intern.applicationState === 'declined'
         ).length;
         const pendingInterns = interns.filter(
-          (intern) => intern.applicationState === "pending"
+          (intern) => intern.applicationState === 'pending'
         ).length;
 
         approved.interns = approvedInterns;
@@ -40,13 +40,13 @@ const internMentorApplicationStatusStatistics = (req, res, next) => {
         .then((mentors) => {
           if (mentors.length) {
             const approvedMentors = mentors.filter(
-              (mentor) => mentor.track === "accepted"
+              (mentor) => mentor.track === 'accepted'
             ).length;
             const declinedMentors = mentors.filter(
-              (mentor) => mentor.track === "declined"
+              (mentor) => mentor.track === 'declined'
             ).length;
             const pendingMentors = mentors.filter(
-              (mentor) => mentor.track === "pending"
+              (mentor) => mentor.track === 'pending'
             ).length;
 
             approved.mentors = approvedMentors;
@@ -54,69 +54,65 @@ const internMentorApplicationStatusStatistics = (req, res, next) => {
             declined.mentors = pendingMentors;
           }
         })
-        .catch((err) => {
-          return responseHandler(
-            res,
-            403,
-            "Failed to fetch Mentors Application status",
-            false,
-            null
-          );
-        })
+        .catch((err) => responseHandler(
+          res,
+          403,
+          'Failed to fetch Mentors Application status',
+          false,
+          null
+        ))
         .finally(() => {
           const data = {
             approved,
             pending,
-            declined,
+            declined
           };
-          return responseHandler(res, "Success", 200, true, data);
+          return responseHandler(res, 'Success', 200, true, data);
         });
     })
-    .catch((err) => {
-      return responseHandler(
-        res,
-        403,
-        "Failed to fetch Interns Application status",
-        false,
-        null
-      );
-    });
+    .catch((err) => responseHandler(
+      res,
+      403,
+      'Failed to fetch Interns Application status',
+      false,
+      null
+    ));
 };
 
 const internMentorTrackStats = (req, res, next) => {
-  let frontEnd = {
+  const frontEnd = {
     mentors: 0,
-    interns: 0,
+    interns: 0
   };
 
-  let backEnd = {
+  const backEnd = {
     mentors: 0,
-    interns: 0,
+    interns: 0
   };
-  let uiUx = {
+  const uiUx = {
     mentors: 0,
-    interns: 0,
+    interns: 0
   };
 
-  let mobile = {
+  const mobile = {
     mentors: 0,
-    interns: 0,
+    interns: 0
   };
 
   Interns.find({})
     .then((interns) => {
       if (interns.length) {
         const uiuxtrackInternsTrackCount = interns.filter(
-          (intern) => intern.track === "design"
+          (intern) => intern.track === 'design'
         ).length;
         const mobileInternsTrackCount = interns.filter(
-          (intern) => intern.track === "mobile"
+          (intern) => intern.track === 'mobile'
         ).length;
         const frontEndInternsTrackCount = interns.filter(
-          (intern) => intern.track === "frontend"
+          (intern) => intern.track === 'frontend'
         ).length;
         const backEndInternsTrackCount = interns.filter(
-          (intern) => intern.track === "backend"
+          (intern) => intern.track === 'backend'
         ).length;
 
         mobile.interns = mobileInternsTrackCount;
@@ -128,16 +124,16 @@ const internMentorTrackStats = (req, res, next) => {
         .then((mentors) => {
           if (mentors.length) {
             const uiuxtrackMentorsCount = mentors.filter(
-              (mentor) => mentor.track === "design"
+              (mentor) => mentor.track === 'design'
             ).length;
             const mobileMentorsCount = mentors.filter(
-              (mentor) => mentor.track === "mobile"
+              (mentor) => mentor.track === 'mobile'
             ).length;
             const frontEndMentorsCount = mentors.filter(
-              (mentor) => mentor.track === "frontend"
+              (mentor) => mentor.track === 'frontend'
             ).length;
             const backEndMentorsCount = mentors.filter(
-              (mentor) => mentor.track === "backend"
+              (mentor) => mentor.track === 'backend'
             ).length;
 
             mobile.mentors = mobileMentorsCount;
@@ -146,40 +142,36 @@ const internMentorTrackStats = (req, res, next) => {
             backEnd.mentors = backEndMentorsCount;
           }
         })
-        .catch((err) => {
-          return responseHandler(
-            res,
-            403,
-            "Failed to fetch Mentors Track Statictics",
-            false,
-            null
-          );
-        })
+        .catch((err) => responseHandler(
+          res,
+          403,
+          'Failed to fetch Mentors Track Statictics',
+          false,
+          null
+        ))
         .finally(() => {
           const data = {
             mobile,
             frontEnd,
             backEnd,
-            uiUx,
+            uiUx
           };
-          return responseHandler(res, "Success", 200, true, data);
+          return responseHandler(res, 'Success', 200, true, data);
         });
     })
-    .catch((err) => {
-      return responseHandler(
-        res,
-        403,
-        "Failed to fetch Interns Track Statictics",
-        false,
-        null
-      );
-    });
+    .catch((err) => responseHandler(
+      res,
+      403,
+      'Failed to fetch Interns Track Statictics',
+      false,
+      null
+    ));
 };
 
 const topAnalytics = (req, res, next) => {
-  let internsCount,
-    adminsCount,
-    mentorsCount = 0;
+  let internsCount;
+  let adminsCount;
+  let mentorsCount = 0;
 
   Interns.find({})
     .then((interns) => {
@@ -193,31 +185,23 @@ const topAnalytics = (req, res, next) => {
             .then((mentors) => {
               mentorsCount = mentors.length;
             })
-            .catch((err) => {
-              return responseHandler(
-                res,
-                "Whoops Failed to fetch Mentors",
-                403
-              );
-            })
-            .finally(() => {
-              return responseHandler(res, "Success", 200, true, {
-                internsCount,
-                adminsCount,
-                mentorsCount,
-              });
-            });
+            .catch((err) => responseHandler(
+              res,
+              'Whoops Failed to fetch Mentors',
+              403
+            ))
+            .finally(() => responseHandler(res, 'Success', 200, true, {
+              internsCount,
+              adminsCount,
+              mentorsCount
+            }));
         })
-        .catch((err) => {
-          return responseHandler(res, "Whoops Failed to fetch Admins", 403);
-        });
+        .catch((err) => responseHandler(res, 'Whoops Failed to fetch Admins', 403));
     })
-    .catch((err) => {
-      return responseHandler(res, "Whoops Failed to fetch interns", 403);
-    });
+    .catch((err) => responseHandler(res, 'Whoops Failed to fetch interns', 403));
 };
 module.exports = {
   topAnalytics,
   internMentorTrackStats,
-  internMentorApplicationStatusStatistics,
+  internMentorApplicationStatusStatistics
 };
