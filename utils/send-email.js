@@ -6,15 +6,15 @@ const sendEmail = async (details) => {
     port: process.env.ZURI_SMTP_PORT,
     auth: {
       user: process.env.ZURI_SMTP_USER,
-      pass: process.env.ZURI_SMTP_PASSWORD,
-    },
+      pass: process.env.ZURI_SMTP_PASSWORD
+    }
   });
 
   const message = {
     from: `${process.env.ZURI_EMAIL_FROM_NAME} <${process.env.ZURI_FROM_EMAIL}>`,
     to: details.email,
     subject: details.subject,
-    html: details.message,
+    html: details.message
   };
   await transporter.sendMail(message);
 };
