@@ -4,12 +4,11 @@
 const { isEmpty, isEmail } = require('validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Admins = require('../models/Admin');
+const Admin = require('../models/Admin');
 const { JWTKey } = require('../config');
 const { responseHandler } = require('../utils/responseHandler');
 const { passwordHash } = require('../utils/password-hash');
 const sendEmail = require('../utils/send-email');
-const Admin = require('../models/Admin');
 
 // Admin Login
 const login = (req, res) => {
@@ -20,7 +19,7 @@ const login = (req, res) => {
   if (!isEmail(email)) {
     responseHandler(res, 'Please enter a valid email');
   }
-  Admins.findOne({ email }).then((admin) => {
+  Admin.findOne({ email }).then((admin) => {
     if (!admin) {
       responseHandler(res, 'Email does not exist in our record');
       return;

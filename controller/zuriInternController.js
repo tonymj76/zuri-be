@@ -42,23 +42,17 @@ const zuriInternApplication = async (req, res, next) => {
   }
 };
 
-
-
-
-module.exports = {
-  getAllInterns: async (req, res) => {
-    try {
-      const zuriInterns = await ZuriIntern.find();
-      return responseHandler(res, 'Success', 200, true, zuriInterns);
-    } catch (err) {
-      return responseHandler(res, 'Error', 500, false, err);
-    }
+const getAllInterns = async (req, res) => {
+  try {
+    const zuriInterns = await ZuriIntern.find();
+    return responseHandler(res, 'Success', 200, true, zuriInterns);
+  } catch (err) {
+    return responseHandler(res, 'Error', 500, false, err);
   }
-
 };
 
 module.exports = {
   zuriInternValidationRules,
   zuriInternApplication,
-  //getAllInterns
+  getAllInterns
 };
