@@ -20,6 +20,26 @@ module.exports = {
         } catch (err) {
             return responseHandler(res, 'An Error occured', 500, false, err);
         }
+    },
+
+    filterInterns: async (req, res) => {
+        let filterValue
+        if (req.query.track) {
+            filterValue = {
+                track: req.query.firstName
+            }
+        } else {
+            filterValue = {
+                track: ""
+            }
+        }
+        try {
+            const zuriInterns = await ZuriIntern.find(filterValue);
+            return responseHandler(res, 'Success', 200, true, zuriInterns);
+
+        } catch (err) {
+            return responseHandler(res, 'An Error occured', 500, false, err);
+        }
     }
 
 };

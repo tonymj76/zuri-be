@@ -2,7 +2,8 @@ const express = require('express');
 
 const router = express.Router();
 const {
-  getAllInterns
+  getAllInterns,
+  filterInterns
 } = require('../controller/zuriInternController');
 
 const {
@@ -16,6 +17,7 @@ const {
 router.post('/mentors/apply', applicationValidationRules(), internshipMentorApplication);
 router.get('/mentors', getAllMentorApplication);
 router.get('/mentors/:id', getSingleMentorApplication);
+router.get('/intern/track', filterInterns);
 router.get('/intern', getAllInterns);
 
 
