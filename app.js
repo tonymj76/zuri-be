@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 
 const apiRouter = require('./routes/adminRoutes');
+const mentorRouter = require('./routes/mentorRoutes')
 const { handleError } = require('./utils/error');
 // const { JWTKey } = require('./config');
 
@@ -17,6 +18,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/cvDir', express.static(path.join(__dirname, 'cvDir')));
 
 app.use('/api/v1', apiRouter);
+app.use('/api/v1', mentorRouter);
+
 
 // Express error middleware
 app.use((err, req, res, next) => next(handleError(res, err)));
