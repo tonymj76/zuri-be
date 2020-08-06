@@ -31,7 +31,7 @@ const internshipMentorApplication = async (req, res, next) => {
     // save the application
     newMentor = await newMentor.save();
     // return the response on success
-    return responseHandler(res, ' Application successful', 201, true, {mentor: newMentor});
+    return responseHandler(res, ' Application successful', 201, true, { mentor: newMentor});
   } catch (err) {
     return next(err);
   }
