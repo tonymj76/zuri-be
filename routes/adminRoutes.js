@@ -28,6 +28,6 @@ router.get(
   internMentorTrackStats
 );
 router.get('/admin/:id', getAdmin);
-router.get('/admin', getAllAdmin);
+router.get('/superadmin/all/admins', getAllAdmin);
 
 module.exports = router;
