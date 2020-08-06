@@ -5,10 +5,9 @@ const cors = require('cors');
 const path = require('path');
 
 const adminRouter = require('./routes/adminRoutes');
-const mentorRouter = require('./routes/mentorRoutes');
+const zuriInternshipRouter = require('./routes/zuriInternshipRoutes');
 const contactRouter = require('./routes/contactRoutes');
-const zuriTrainingRoute = require('./routes/zuriTrainingRoute');
-const zuriInternRoute = require('./routes/zuriInternRoutes');
+const zuriTrainingRouter = require('./routes/zuriTrainingRoutes');
 const { handleError } = require('./utils/error');
 
 const app = express();
@@ -20,10 +19,9 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/cvDir', express.static(path.join(__dirname, 'cvDir')));
 
 app.use('/api/v1', adminRouter);
-app.use('/api/v1', mentorRouter);
-app.use('/api/v1', zuriTrainingRoute);
+app.use('/api/v1/internship', zuriInternshipRouter);
+app.use('/api/v1/training', zuriTrainingRouter);
 app.use('/api/v1', contactRouter);
-app.use('/api/v1', zuriInternRoute);
 
 // Express error middleware
 app.use((err, req, res, next) => next(handleError(res, err)));
