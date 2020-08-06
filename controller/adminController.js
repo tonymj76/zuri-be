@@ -62,7 +62,6 @@ const logout = (req, res) => {
   responseHandler(res, 'No Logout');
 };
 
-// Superadmin
 const addAdmin = async (req, res) => {
   try {
     const {
@@ -107,40 +106,8 @@ const addAdmin = async (req, res) => {
     return responseHandler(res, error.message, 500, false);
   }
 };
-
-const deleteAdmin = async (req, res) => {
-  try {
-    const { adminId } = req.params;
-    const admin = await Admin.findById({ _id: adminId });
-
-    if (!admin) {
-      return responseHandler(res, 'Admin does not exist!', 401, false);
-    }
-
-    Admin.findByIdAndDelete(adminId, (err) => {
-      if (err) {
-        return responseHandler(res, err.message, 400, false);
-      }
-      return responseHandler(res, 'Admin deleted successfully', 200, true);
-    });
-  } catch (error) {
-    return responseHandler(res, error.message, 500, false);
-  }
-};
-
-const getAllAdmins = async (req, res) => {
-  try {
-    const allAdmins = await Admin.find();
-    return responseHandler(res, 'Admins list fetched successfully', 200, true, allAdmins);
-  } catch (error) {
-    return responseHandler(res, error.message, 500, false);
-  }
-};
-
 module.exports = {
   login,
   logout,
-  addAdmin,
-  deleteAdmin,
-  getAllAdmins
+  addAdmin
 };
