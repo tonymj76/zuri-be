@@ -1,7 +1,7 @@
 const { body, validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 const Mentor = require('../models/ZuriInternMentorModel');
 const { responseHandler } = require('../utils/responseHandler');
-const mongoose = require('mongoose')
 
 // Application rules
 const applicationValidationRules = () => [
@@ -47,22 +47,21 @@ const getAllMentorApplication = async (req, res, next) => {
   }
 };
 
-const getSingleMentorApplication = async (req, res, next){
-  const mentorId = req.params
-  if(!mongoose.isValidObjectId(mentorId)){
-    return responseHandler(res,'Invalid Id for a mentor',400)
+const getSingleMentorApplication = async (req, res, next) => {
+  const mentorId = req.params;
+  if (!mongoose.isValidObjectId(mentorId)) {
+    return responseHandler(res, 'Invalid Id for a mentor', 400);
   }
-  try{
-    const mentor = await Mentor.find({_id: mentorId});
-    if(!mentor){
-      return responseHandler(res,'Mentor not found',404);
+  try {
+    const mentor = await Mentor.find({ _id: mentorId });
+    if (!mentor) {
+      return responseHandler(res, 'Mentor not found', 404);
     }
-    responseHandler(res,'Mentor ',200, true, {mentor});
-  }
-  catch(err){
+    responseHandler(res, 'Mentor ', 200, true, { mentor });
+  } catch (err) {
     return next(err);
   }
-}
+};
 
 module.exports = {
   applicationValidationRules,
