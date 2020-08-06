@@ -44,6 +44,15 @@ const getAllMentorApplication = async (req, res, next) => {
   const params = req.query;
   // Each query parameter should be assigned as an object and added the query array
   Object.entries(params).forEach((param) => {
+    if (param[0] === 's' || param[0] === 'search') {
+      const queryObj = {
+        $or: [{ firstName: { $regex: `${param[1]}` } },
+          { lastName: { $regex: `${param[1]}` } }
+        ]
+      };
+      queryArray.push(queryObj);
+      return;
+    }
     const queryObj = { [param[0]]: param[1] };
     queryArray.push(queryObj);
   });
