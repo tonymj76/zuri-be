@@ -1,15 +1,22 @@
-const express = require('express');
+const express = require("express");
 
+const { login, logout } = require("../controller/adminController");
 const {
-  login,
-  logout
-} = require('../controller/adminController');
+  topAnalytics,
+  internMentorTrackStats,
+} = require("../controller/analytics");
 
 const router = express.Router();
 
 // Admin routes
-router.post('/auth', login);
-router.get('/logout', logout);
+router.post("/auth", login);
+router.get("/logout", logout);
 // router.post('/admin/create', newAdminValidationRules(), createAdmin);
 
+router.get("/analytics/toplevel", topAnalytics);
+// router.get("/analytics/lowerlevel/intern-mentor-status")
+router.get(
+  "/analytics/lowerlevel/intern-mentor-tracks",
+  internMentorTrackStats
+);
 module.exports = router;
