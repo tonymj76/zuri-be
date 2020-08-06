@@ -9,7 +9,8 @@ const {
 } = require('../controller/adminController');
 const {
   topAnalytics,
-  internMentorTrackStats
+  internMentorTrackStats,
+  internMentorApplicationStatusStatistics
 } = require('../controller/analytics');
 
 const router = express.Router();
@@ -23,6 +24,10 @@ router.get('/superadmin/all/admins', getAllAdmins);
 
 router.get('/analytics/toplevel', topAnalytics);
 // router.get("/analytics/lowerlevel/intern-mentor-status")
+router.get(
+  '/analytics/lowerlevel/intern-mentor-application-status',
+  internMentorApplicationStatusStatistics
+);
 router.get(
   '/analytics/lowerlevel/intern-mentor-tracks',
   internMentorTrackStats
