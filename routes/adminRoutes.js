@@ -1,6 +1,8 @@
 const express = require('express');
 
-const { login, logout } = require('../controller/adminController');
+const {
+  login, logout, addAdmin, deleteAdmin
+} = require('../controller/adminController');
 const {
   topAnalytics,
   internMentorTrackStats,
@@ -12,7 +14,8 @@ const router = express.Router();
 // Admin routes
 router.post('/auth', login);
 router.get('/logout', logout);
-// router.post('/admin/create', newAdminValidationRules(), createAdmin);
+router.post('/superadmin/create/admin', addAdmin);
+router.delete('/superadmin/delete/:adminId', deleteAdmin);
 
 router.get('/analytics/toplevel', topAnalytics);
 
