@@ -1,11 +1,11 @@
 const ZuriTrainingMentor = require('../models/ZuriTrainingMentorModel');
 const { responseHandler } = require('../utils/responseHandler');
-const { validationResult } = require('express-validator/check');
+const { validationResult } = require('express-validator');
 
 module.exports = {
     createApplication: async (req, res) => {
         try{
-            const errors = validationResult(req);
+            const errors = await validationResult(req);
 
             if (!errors.isEmpty()) {
                 responseHandler(res, { errors: errors.array() });
@@ -25,6 +25,11 @@ module.exports = {
                 stateOfResidence, 
                 intrest
             } = req.body;
+
+            const applicationExist = await ZuriTrainingMentor.findOne({ email });
+            if(applicationExist) {
+                return responseHandler(res, "Application already exist", 401, false)
+            }
 
             const application = { 
                 firstName, 
