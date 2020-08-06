@@ -9,12 +9,10 @@
  *  responseHandler(res,200,"User data found.", { user: {name: 'tobi'}})
  */
 
-const responseHandler = (res, statusCode = 200, success = true, message, data = {}) => {
-  res.status(statusCode).send({
+exports.responseHandler = (res, message, statusCode = 501, success = false, data = {}) => {
+  res.status(statusCode).json({
     success,
     message,
     data
   });
 };
-
-module.exports = responseHandler;

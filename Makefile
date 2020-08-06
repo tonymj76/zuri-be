@@ -21,3 +21,6 @@ update:
 	git pull upstream develop
 	yarn install
 	yarn dev
+
+login:
+	curl -X POST -H "Content-Type: application/json" -d '{"email":"admin@example.com", "password":"password"}' http://localhost:5600/api/v1/auth
