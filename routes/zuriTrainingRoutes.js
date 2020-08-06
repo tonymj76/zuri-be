@@ -9,7 +9,7 @@ const {
 } = require('../controller/mentorTraningController');
 
 const {
-  getZuriTraining
+  getZuriTraining, findByNameIntern, filterInternTrainingData, findByNameMentor, filterMentorTrainingData
 } = require('../controller/zuriTraniningController');
 
 const router = express.Router();
@@ -22,7 +22,11 @@ router.post('/mentor/apply', createApplication);
 router.patch('/mentor/:id/decline', declineApplication);
 router.patch('/mentor/:id/accept', acceptApplication);
 router.get('/mentor/applications', allApplication);
+router.get('/mentor/:firstName', findByNameMentor)
+router.get('/mentor/filter/:filterBy', filterMentorTrainingData)
 
-// fetch all zuri inern end point
+// Intern routes
 router.get('/getZuriTraining', getZuriTraining);
+router.get('/intern/:firstName', findByNameIntern)
+router.get('/intern/filter/:filterBy', filterInternTrainingData)
 module.exports = router;
