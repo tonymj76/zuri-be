@@ -10,10 +10,7 @@ module.exports = {
             return responseHandler(res, 'Success', 200, true, zuriInterns);
 
         } catch (err) {
-            res.status(500).json({
-                error: err
-            });
-
+            return responseHandler(res, 'Error', 500, false, err);
         }
     }
 
