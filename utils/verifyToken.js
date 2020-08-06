@@ -1,30 +1,30 @@
 const jwt = require('jsonwebtoken');
 const { JWTKey } = require('../config');
 const { responseHandler } = require('./responseHandler');
-const Admins = require('../models/AdminLogin');
+const Admins = require('../models/Admin');
 
 const verifyToken = (req, res, next) => {
   const token = req.headers.authorization.split(' ')[1];
 
   if (!token) {
-    responseHandler(res, 401, false, 'unauthorized access');
+    responseHandler(res, 'unauthorized access');
   }
 
   try {
     jwt.verify(token, JWTKey, (err, decoded) => {
       if (err) {
-        responseHandler(res, 401, false, 'unauthorized access');
+        responseHandler(res, 'unauthorized access');
       }
-      req.userId = decoded.id;
+      req.adminId = decoded.id;
 
       Admins.findOne({ _id: decoded.id })
-        .then((user) => {
-          req.user = user;
+        .then((admin) => {
+          req.admin = admin;
         })
-        .then((y) => next());
+        .then(() => next());
     });
   } catch {
-    res.status(401).send({ success: false, message: 'unauthorized access' });
+    responseHandler(res, 'unauthorized access');
   }
 };
 

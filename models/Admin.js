@@ -9,7 +9,13 @@ const adminSchema = mongoose.Schema({
     type: String,
     enum: ['superAdmin', 'admin'],
     default: 'admin'
+  },
+  category: {
+    type: String,
+    enum: ['startng', 'hngi'],
+    default: 'hngi'
   }
+
 }, {
   timestamps: true
 });
