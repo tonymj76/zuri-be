@@ -98,7 +98,7 @@ const addAdmin = async (req, res) => {
     };
     try {
       await sendEmail(details);
-      return responseHandler(res, 'Admin created successfully', 200);
+      return responseHandler(res, 'Admin created successfully', 200, true);
     } catch (err) {
       return responseHandler(res, err.message, 500, false);
     }
