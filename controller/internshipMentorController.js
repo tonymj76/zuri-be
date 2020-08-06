@@ -57,7 +57,7 @@ const getSingleMentorApplication = async (req, res, next) => {
     if (!mentor) {
       return responseHandler(res, 'Mentor not found', 404);
     }
-    responseHandler(res, 'Mentor ', 200, true, { mentor });
+    return responseHandler(res, 'Mentor ', 200, true, { mentor });
   } catch (err) {
     return next(err);
   }
