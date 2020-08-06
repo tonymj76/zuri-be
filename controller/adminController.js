@@ -107,6 +107,25 @@ const addAdmin = async (req, res) => {
   }
 };
 
+const deleteAdmin = async (req, res) => {
+  try {
+    const { adminId } = req.params;
+    const admin = await Admin.findById({ _id: adminId });
+
+    if (!admin) {
+      return responseHandler(res, 'Admin does not exist!', 401, false);
+    }
+
+    Admin.findByIdAndDelete(adminId, (err) => {
+      if (err) {
+        return responseHandler(res, err.message, 400, false);
+      }
+      return responseHandler(res, 'Admin deleted successfully', 200, true);
+    });
+  } catch (error) {
+    return responseHandler(res, error.message, 500, false);
+  }
+};
 const getAllAdmin = (req, res) => {
   Admin.find({})
     .then((result) => {
@@ -149,6 +168,7 @@ module.exports = {
   login,
   logout,
   addAdmin,
+  deleteAdmin,
   getAdmin,
   getAllAdmin
 };

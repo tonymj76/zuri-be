@@ -1,6 +1,8 @@
 const express = require('express');
 
-const { login, logout, getAdmin, getAllAdmin } = require('../controller/adminController');
+const {
+  login, logout, getAdmin, getAllAdmin, addAdmin, deleteAdmin
+} = require('../controller/adminController');
 const {
   topAnalytics,
   internMentorTrackStats,
@@ -12,7 +14,8 @@ const router = express.Router();
 // Admin routes
 router.post('/auth', login);
 router.get('/logout', logout);
-// router.post('/admin/create', newAdminValidationRules(), createAdmin);
+router.post('/superadmin/create/admin', addAdmin);
+router.delete('/superadmin/delete/:adminId', deleteAdmin);
 
 router.get('/analytics/toplevel', topAnalytics);
 
@@ -24,7 +27,7 @@ router.get(
   '/analytics/lowerlevel/intern-mentor-tracks',
   internMentorTrackStats
 );
-router.get('/admin/:id', getAdmin)
-router.get('/admin', getAllAdmin)
+router.get('/admin/:id', getAdmin);
+router.get('/superadmin/all/admins', getAllAdmin);
 
 module.exports = router;
