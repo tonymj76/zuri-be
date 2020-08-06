@@ -126,9 +126,49 @@ const deleteAdmin = async (req, res) => {
     return responseHandler(res, error.message, 500, false);
   }
 };
+const getAllAdmin = (req, res) => {
+  Admin.find({})
+    .then((result) => {
+      responseHandler(
+        res,
+        'Successfully retrieved all admins',
+        200,
+        true,
+        result
+      );
+    })
+    .catch((err) => {
+      responseHandler(
+        res,
+        'Something went worng, Could not retrieve admin',
+        500,
+        false
+      );
+    });
+};
+
+const getAdmin = (req, res) => {
+  const _id = req.params.id;
+  Admin.find({ _id })
+    .then((result) => {
+      responseHandler(res, 'Admin successfully retrieved', 200, true, result);
+    })
+    .catch((err) => {
+      responseHandler(
+        res,
+        'Something went worng, Could not retrieve admin',
+        500,
+        false,
+        err
+      );
+    });
+};
+
 module.exports = {
   login,
   logout,
   addAdmin,
-  deleteAdmin
+  deleteAdmin,
+  getAdmin,
+  getAllAdmin
 };
