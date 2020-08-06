@@ -5,6 +5,7 @@ const cors = require('cors');
 const path = require('path');
 
 const apiRouter = require('./routes/adminRoutes');
+const zuriTrainingRoute = require('./routes/zuriTrainingRoute');
 const { handleError } = require('./utils/error');
 // const { JWTKey } = require('./config');
 
@@ -17,6 +18,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use('/cvDir', express.static(path.join(__dirname, 'cvDir')));
 
 app.use('/api/v1', apiRouter);
+app.use('/api/v1', zuriTrainingRoute);
 
 // Express error middleware
 app.use((err, req, res, next) => next(handleError(res, err)));
