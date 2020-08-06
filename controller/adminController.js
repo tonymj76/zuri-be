@@ -8,12 +8,14 @@ const jwt = require('jsonwebtoken');
 const Admins = require('../models/Admin');
 const { JWTKey } = require('../config');
 const { responseHandler } = require('../utils/responseHandler');
+const { passwordHash } = require('../../Utils/password-hash');
+const sendEmail = require('../../Utils/send-email');
 
 // const newAdminValidationRules = () => [
 //   body('firstName').isString(),
 //   body('lastName').isString(),
 //   body('email').isEmail(),
-//   body('adminpassword').isLength({ min: 5 }),
+//   body('password').isLength({ min: 5 }),
 //   body('category').isString(),
 //   body('role').isString()
 // ];
@@ -69,6 +71,50 @@ const logout = (req, res) => {
   responseHandler(res, 'No Logout');
 };
 
+const addAdmin = async (req, res) => {
+  try {
+    const { firstName, lastName, email, password, category } = req.body;
+    
+    const hashedPassword = await passwordHash(password);
+    const newAdmin = {
+      firstName,
+      lastName,
+      email,
+      password: hashedPassword,
+      role: 'admin',
+      category,
+    };
+
+    const adminAdded = await newAdmin.save();
+    if(!adminAdded){
+      return responseHandler(res, 'Unable to create Admin', 401, false);
+    }
+    // send admin login details
+    const link = `${process.env.ZURI_DEV_URL}/login`;
+    const details = {
+      email,
+      subject: 'ZURI Admin Account Details',
+      message: `<h5>Login Credentials<h5>
+                <p>Email: ${email}<p>
+                <p>Password: ${password}<p>
+                Click <a href=${link}>here</a> to login`,
+    };
+    try {
+      await sendEmail(details);
+      return responseHandler(res, 'Admin created successfully', 200);
+    } catch (err) {
+      return responseHandler(res, err.message, 500, false);
+    }
+    
+  } catch (error) {
+    return responseHandler(res, error.message, 500, false);
+  }
+  
+  
+
+
+
+}
 module.exports = {
   login,
   logout
