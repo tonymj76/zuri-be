@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { login, logout } = require('../controller/adminController');
+const { login, logout, getAdmin, getAllAdmin } = require('../controller/adminController');
 const {
   topAnalytics,
   internMentorTrackStats,
@@ -24,5 +24,7 @@ router.get(
   '/analytics/lowerlevel/intern-mentor-tracks',
   internMentorTrackStats
 );
+router.get('/admin/:id', getAdmin)
+router.get('/admin', getAllAdmin)
 
 module.exports = router;
