@@ -4,7 +4,7 @@ const logger = require('morgan');
 const cors = require('cors');
 const path = require('path');
 
-const apiRouter = require('./routes/adminRoutes');
+const adminRouter = require('./routes/adminRoutes');
 const zuriInternshipRouter = require('./routes/zuriInternshipRoutes');
 const contactRouter = require('./routes/contactRoutes');
 const zuriTrainingRouter = require('./routes/zuriTrainingRoutes');
@@ -18,7 +18,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/cvDir', express.static(path.join(__dirname, 'cvDir')));
 
-app.use('/api/v1', apiRouter);
+app.use('/api/v1', adminRouter);
 app.use('/api/v1/internship', zuriInternshipRouter);
 app.use('/api/v1/training', zuriTrainingRouter);
 app.use('/api/v1', contactRouter);
