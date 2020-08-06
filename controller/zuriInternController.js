@@ -1,20 +1,20 @@
-const { body, validationResult } = require('express-validator');
-const mongoose = require('mongoose');
-const ZuriIntern = require('../models/ZuriInternModel');
-const { responseHandler } = require('../utils/responseHandler');
+const { body, validationResult } = require("express-validator");
+const mongoose = require("mongoose");
+const ZuriIntern = require("../models/ZuriInternModel");
+const { responseHandler } = require("../utils/responseHandler");
 
 // Zuri Intern Validation rules
 const zuriInternValidationRules = () => [
-  body('firstName').isString().not().isEmpty(),
-  body('lastName').isString().not().isEmpty(),
-  body('email').isEmail().not().isEmpty(),
-  body('country').isString().not().isEmpty(),
-  body('state').isString().not().isEmpty(),
-  body('track').isString().not().isEmpty(),
-  body('employmentStatus').isString().not().isEmpty(),
-  body('gender').isString().not().isEmpty(),
-  body('dob').isString().not().isEmpty(),
-  body('phoneNumber').isMobilePhone().not().isEmpty()
+  body("firstName").isString().not().isEmpty(),
+  body("lastName").isString().not().isEmpty(),
+  body("email").isEmail().not().isEmpty(),
+  body("country").isString().not().isEmpty(),
+  body("state").isString().not().isEmpty(),
+  body("track").isString().not().isEmpty(),
+  body("employmentStatus").isString().not().isEmpty(),
+  body("gender").isString().not().isEmpty(),
+  body("dob").isString().not().isEmpty(),
+  body("phoneNumber").isMobilePhone().not().isEmpty(),
 ];
 
 // Zuri Intern Application
@@ -31,34 +31,35 @@ const zuriInternApplication = async (req, res, next) => {
     // check if the email is already in use
     const intern = await Intern.findOne({ email });
     if (intern) {
-      return responseHandler(res, 'Email address already used for application', 400, true);
+      return responseHandler(
+        res,
+        "Email address already used for application",
+        400,
+        true
+      );
     }
     // create the new intern application
     let newIntern = new Intern(req.body);
     newIntern = await newIntern.save();
-    return responseHandler(res, ' Application is successful', 201, true, { intern: newIntern });
+    return responseHandler(res, " Application is successful", 201, true, {
+      intern: newIntern,
+    });
   } catch (err) {
     return next(err);
   }
 };
 
-
-
-
-module.exports = {
-  getAllInterns: async (req, res) => {
-    try {
-      const zuriInterns = await ZuriIntern.find();
-      return responseHandler(res, 'Success', 200, true, zuriInterns);
-    } catch (err) {
-      return responseHandler(res, 'Error', 500, false, err);
-    }
+const getAllInterns = async (req, res) => {
+  try {
+    const zuriInterns = await ZuriIntern.find();
+    return responseHandler(res, "Success", 200, true, zuriInterns);
+  } catch (err) {
+    return responseHandler(res, "Error", 500, false, err);
   }
-
 };
 
 module.exports = {
   zuriInternValidationRules,
   zuriInternApplication,
-  //getAllInterns
+  getAllInterns,
 };
