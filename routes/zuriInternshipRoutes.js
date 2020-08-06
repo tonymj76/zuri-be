@@ -15,7 +15,7 @@ const {
 // Internship mentor routes
 router.post('/mentors/apply', applicationValidationRules(), internshipMentorApplication);
 router.get('/mentors', getAllMentorApplication);
-router.get('/mentors/:Id', getSingleMentorApplication);
+router.get('/mentors/:id', getSingleMentorApplication);
 router.get('/intern', getAllInterns);
 
 module.exports = router;

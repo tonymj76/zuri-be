@@ -48,7 +48,7 @@ const getAllMentorApplication = async (req, res, next) => {
 };
 
 const getSingleMentorApplication = async (req, res, next) => {
-  const mentorId = req.params;
+  const mentorId = req.params.id;
   if (!mongoose.isValidObjectId(mentorId)) {
     return responseHandler(res, 'Invalid Id for a mentor', 400);
   }
