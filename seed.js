@@ -2,7 +2,7 @@
 const bcrypt = require('bcryptjs');
 const chalk = require('chalk');
 const inquirer = require('inquirer');
-const Admins = require('./models/AdminLogin');
+const Admins = require('./models/Admin');
 
 const seedAdmin = async () => {
   const logInit = chalk.yellow('[!] Initializing super Admin...!');
