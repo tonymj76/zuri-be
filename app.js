@@ -4,19 +4,11 @@ const logger = require("morgan");
 const cors = require("cors");
 const path = require("path");
 
-<<<<<<< HEAD
-const apiRouter = require("./routes/adminRoutes");
+const adminRouter = require("./routes/adminRoutes");
 const zuriInternshipRouter = require("./routes/zuriInternshipRoutes");
 const contactRouter = require("./routes/contactRoutes");
 const zuriTrainingRouter = require("./routes/zuriTrainingRoutes");
 const { handleError } = require("./utils/error");
-=======
-const adminRouter = require('./routes/adminRoutes');
-const zuriInternshipRouter = require('./routes/zuriInternshipRoutes');
-const contactRouter = require('./routes/contactRoutes');
-const zuriTrainingRouter = require('./routes/zuriTrainingRoutes');
-const { handleError } = require('./utils/error');
->>>>>>> bd5422549c00368c4b1a29a85d84af50ed7fc464
 
 const app = express();
 
@@ -26,10 +18,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/cvDir", express.static(path.join(__dirname, "cvDir")));
 
-app.use('/api/v1', adminRouter);
-app.use('/api/v1/internship', zuriInternshipRouter);
-app.use('/api/v1/training', zuriTrainingRouter);
-app.use('/api/v1', contactRouter);
+app.use("/api/v1", adminRouter);
+app.use("/api/v1/internship", zuriInternshipRouter);
+app.use("/api/v1/training", zuriTrainingRouter);
+app.use("/api/v1", contactRouter);
 
 // Express error middleware
 app.use((err, req, res, next) => next(handleError(res, err)));
