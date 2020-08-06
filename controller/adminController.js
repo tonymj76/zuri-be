@@ -7,7 +7,6 @@ const jwt = require('jsonwebtoken');
 const Admins = require('../models/Admin');
 const { JWTKey } = require('../config');
 const { responseHandler } = require('../utils/responseHandler');
-const { passwordHash } = require('../utils/password-hash');
 const sendEmail = require('../utils/send-email');
 const Admin = require('../models/Admin');
 
@@ -73,7 +72,7 @@ const addAdmin = async (req, res) => {
       return responseHandler(res, 'Admin with that email already exist', 401, false);
     }
 
-    const hashedPassword = await passwordHash(password);
+    const hashedPassword = await bcrypt.hash(password);
     const newAdmin = new Admin({
       name: `${firstName} ${lastName}`,
       email,
