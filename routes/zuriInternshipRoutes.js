@@ -6,11 +6,13 @@ const {
 } = require('../controller/zuriInternController');
 
 const {
-  internshipMentorApplication, applicationValidationRules
+  internshipMentorApplication,
+  applicationValidationRules
 } = require('../controller/internshipMentorController');
 
 // Internship mentor routes
 router.post('/mentors/apply', applicationValidationRules(), internshipMentorApplication);
 router.get('/intern', getAllInterns);
+
 
 module.exports = router;
