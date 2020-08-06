@@ -3,6 +3,86 @@ const Interns = require("../models/ZuriInternModel");
 const Admin = require("../models/Admin");
 const Mentor = require("../models/ZuriInternMentorModel");
 
+const internMentorApplicationStatusStatistics = (req, res, next) => {
+  const approved = {
+    mentors: 0,
+    interns: 0,
+  };
+
+  const pending = {
+    mentors: 0,
+    interns: 0,
+  };
+
+  const declined = {
+    mentors: 0,
+    interns: 0,
+  };
+
+  Interns.find({})
+    .then((interns) => {
+      if (interns.length) {
+        const approvedInterns = interns.filter(
+          (intern) => intern.applicationState === "accepted"
+        ).length;
+        const declinedInterns = interns.filter(
+          (intern) => intern.applicationState === "declined"
+        ).length;
+        const pendingInterns = interns.filter(
+          (intern) => intern.applicationState === "pending"
+        ).length;
+
+        approved.interns = approvedInterns;
+        pending.interns = pendingInterns;
+        declined.interns = declinedInterns;
+      }
+      Mentor.find({})
+        .then((mentors) => {
+          if (mentors.length) {
+            const approvedMentors = mentors.filter(
+              (mentor) => mentor.track === "accepted"
+            ).length;
+            const declinedMentors = mentors.filter(
+              (mentor) => mentor.track === "declined"
+            ).length;
+            const pendingMentors = mentors.filter(
+              (mentor) => mentor.track === "pending"
+            ).length;
+
+            approved.mentors = approvedMentors;
+            pending.mentors = declinedMentors;
+            declined.mentors = pendingMentors;
+          }
+        })
+        .catch((err) => {
+          return responseHandler(
+            res,
+            403,
+            "Failed to fetch Mentors Application status",
+            false,
+            null
+          );
+        })
+        .finally(() => {
+          const data = {
+            approved,
+            pending,
+            declined,
+          };
+          return responseHandler(res, "Success", 200, true, data);
+        });
+    })
+    .catch((err) => {
+      return responseHandler(
+        res,
+        403,
+        "Failed to fetch Interns Application status",
+        false,
+        null
+      );
+    });
+};
+
 const internMentorTrackStats = (req, res, next) => {
   let frontEnd = {
     mentors: 0,
@@ -139,4 +219,5 @@ const topAnalytics = (req, res, next) => {
 module.exports = {
   topAnalytics,
   internMentorTrackStats,
+  internMentorApplicationStatusStatistics,
 };
