@@ -4,6 +4,6 @@ module.exports = {
   dbPass: process.env.PASS || 'hngi8be',
   dbname: process.env.NAME || 'hngi8be',
   // dbconnection: process.env.DBURL || 'mongodb+srv://hngi8be:hngi8be@hngi8.qqarl.mongodb.net/hngi8be?retryWrites=true&w=majority',
-  dbconnection: process.env.DBURL || 'mongodb+srv://Roberto:freeme2018@cluster0-xdavb.mongodb.net/test?retryWrites=true&w=majority',
+  dbconnection: process.env.DBURL || 'mongodb+srv://tmayor20:tmayor2020@cluster0.tui54.mongodb.net/tmayor20?retryWrites=true&w=majority',
   JWTKey: process.env.JWTKey || 'f3e29360-dd0e-438c-80b8-b33c00ee6d8c'
 };

@@ -1,7 +1,8 @@
 /* eslint-disable new-cap */
 /* eslint-disable no-console */
 const { body, validationResult } = require('express-validator');
-const Intern = require('../models/zuriTrainingModel');
+const Intern = require('../models/ZuriTrainingModel');
+const { responseHandler } = require('../utils/responseHandler');
 
 const internApplicationValidationRules = () => [
   body('firstName').isString().not().isEmpty(),
@@ -30,10 +31,7 @@ const createIntern = async (req, res) => {
       myarray.push(message);
     });
     if (myarray.length > 0) {
-      return res.status(422).json({
-        status: 'error',
-        message: myarray
-      });
+      return responseHandler(res, 'An error occured in your inputs', 422, false, myarray);
     }
   } catch (error) {
     return false;
@@ -42,10 +40,7 @@ const createIntern = async (req, res) => {
   try {
     const checkIntern = await Intern.findOne({ email });
     if (checkIntern) {
-      return res.status(200).json({
-        status: 'error',
-        message: 'Record already exist'
-      });
+      return responseHandler(res, 'Record already exist', 401, false);
     }
     const intern = new Intern({
       firstName,
@@ -61,21 +56,11 @@ const createIntern = async (req, res) => {
     });
     const recordSave = await intern.save();
     if (!recordSave) {
-      return res.status(400).json({
-        status: 'error',
-        message: 'Error occured creating an intern profile'
-      });
+      return responseHandler(res, 'Unable to register application', 401, false);
     }
-
-    return res.status(200).json({
-      status: 'success',
-      message: 'Application Successfully Registered'
-    });
+    return responseHandler(res, 'Application Successfully Registered', 200, true);
   } catch (error) {
-    return res.status(500).json({
-      status: 'error',
-      message: error.message
-    });
+    return responseHandler(res, 'Inputs error', 500, false, error.message);
   }
 };
 
