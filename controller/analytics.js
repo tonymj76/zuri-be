@@ -3,6 +3,7 @@ const Interns = require("../models/ZuriInternModel");
 const Admin = require("../models/Admin");
 const Mentor = require("../models/ZuriInternMentorModel");
 
+
 const internMentorTrackStats = (req, res, next) => {
   let frontEnd = {
     mentors: 0,
@@ -96,6 +97,8 @@ const internMentorTrackStats = (req, res, next) => {
     });
 };
 
+
+
 const topAnalytics = (req, res, next) => {
   let internsCount,
     adminsCount,
@@ -138,5 +141,6 @@ const topAnalytics = (req, res, next) => {
 };
 module.exports = {
   topAnalytics,
-  internMentorTrackStats,
+
+internMentorTrackStats,
 };

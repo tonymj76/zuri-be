@@ -14,11 +14,9 @@ router.get("/logout", logout);
 // router.post('/admin/create', newAdminValidationRules(), createAdmin);
 
 router.get("/analytics/toplevel", topAnalytics);
-
 // router.get("/analytics/lowerlevel/intern-mentor-status")
 router.get(
   "/analytics/lowerlevel/intern-mentor-tracks",
   internMentorTrackStats
 );
-
 module.exports = router;
