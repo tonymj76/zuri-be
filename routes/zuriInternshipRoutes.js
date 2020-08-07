@@ -25,7 +25,7 @@ router.get('/mentors/:id', getSingleMentorApplication);
 
 // Zuri Intern routes
 router.get('/intern', getAllInterns);
-router.get('/intern/:id', getZuriInternByID);
+router.get('/intern/:id', getZuriInternByID); 
 router.post('/intern/apply', zuriInternValidationRules(), zuriInternApplication);
 router.get('/intern/track', filterInterns);
 
