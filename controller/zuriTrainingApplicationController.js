@@ -14,12 +14,18 @@ const internApplicationValidationRules = () => [
   body('employmentStatus').isString().not().isEmpty(),
   body('gender').isString().not().isEmpty(),
   body('dob').isString().not().isEmpty(),
-  body('phoneNumber').isLength({ min: 10 }).not().isEmpty()
+  body('phoneNumber').isLength({ min: 10 }).not().isEmpty(),
+  body('city').isString().not().isEmpty(),
+  body('zipcode').isString().not().isEmpty(),
+  body('address').isString().not().isEmpty()
 
 ];
 const createIntern = async (req, res) => {
   const {
-    firstName, lastName, email, country, state, track, employmentStatus, gender, dob, phoneNumber
+    firstName, lastName, email, country, state, track, employmentStatus, gender, dob,
+    phoneNumber, city,
+    zipcode,
+    address
   } = req.body;
 
   try {
@@ -47,6 +53,9 @@ const createIntern = async (req, res) => {
       lastName,
       email,
       country,
+      city,
+      zipcode,
+      address,
       state,
       track,
       employmentStatus,

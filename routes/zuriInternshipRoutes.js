@@ -2,7 +2,6 @@ const express = require('express');
 
 const router = express.Router();
 
-
 const {
   zuriInternValidationRules,
   zuriInternApplication,
@@ -21,11 +20,8 @@ router.post('/mentors/apply', applicationValidationRules(), internshipMentorAppl
 router.get('/mentors', getAllMentorApplication);
 router.get('/mentors/:id', getSingleMentorApplication);
 
-
 // Zuri Intern routes
 router.post('/intern/apply', zuriInternValidationRules(), zuriInternApplication);
 router.get('/intern', getAllInterns);
-
-
 
 module.exports = router;

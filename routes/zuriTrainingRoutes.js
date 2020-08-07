@@ -9,7 +9,15 @@ const {
 } = require('../controller/mentorTraningController');
 
 const {
-  getZuriTraining, findByNameIntern, filterInternTrainingData, findByNameMentor, filterMentorTrainingData
+  getZuriTraining,
+  findByNameIntern,
+  filterInternTrainingData,
+  findByNameMentor,
+  filterMentorTrainingData,
+  getZuriTrainingCSV,
+  filterInternTrainingDataCSV,
+  getZuriMentorCSV,
+  filterMentorTrainingDataCSV
 } = require('../controller/zuriTraniningController');
 
 const router = express.Router();
@@ -17,16 +25,22 @@ const router = express.Router();
 router.post('/zuri/training/application', internApplicationValidationRules(), createIntern);
 
 // mentor routes
-
 router.post('/mentor/apply', createApplication);
 router.patch('/mentor/:id/decline', declineApplication);
 router.patch('/mentor/:id/accept', acceptApplication);
 router.get('/mentor/applications', allApplication);
-router.get('/mentor/:firstName', findByNameMentor)
-router.get('/mentor/filter/:filterBy', filterMentorTrainingData)
+router.get('/mentor/:firstName', findByNameMentor);
+router.get('/mentor/filter/:filterBy', filterMentorTrainingData);
+// mentor csv routes
+router.get('/getZuriTraining/mentors/csv', getZuriMentorCSV);
+router.get('/mentor/filter/csv/:filterBy', filterMentorTrainingDataCSV);
 
 // Intern routes
 router.get('/getZuriTraining', getZuriTraining);
-router.get('/intern/:firstName', findByNameIntern)
-router.get('/intern/filter/:filterBy', filterInternTrainingData)
+router.get('/intern/:firstName', findByNameIntern);
+router.get('/intern/filter/:filterBy', filterInternTrainingData);
+// intern csv route
+router.get('/getZuriTraining/csv', getZuriTrainingCSV);
+router.get('/intern/filter/csv/:filterBy', filterInternTrainingDataCSV);
+
 module.exports = router;
