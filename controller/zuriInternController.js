@@ -4,12 +4,15 @@ const ZuriIntern = require("../models/ZuriInternModel");
 
 const { responseHandler } = require("../utils/responseHandler");
 
+// Zuri Get all interns
 const getAllInterns = async (req, res) => {
   let searchValue;
+  // Zuri  query value
   if (req.query.firstName) {
     searchValue = {
       firstName: req.query.firstName,
     };
+// get all interns
   } else {
     searchValue = {};
   }
@@ -21,6 +24,7 @@ const getAllInterns = async (req, res) => {
   }
 };
 
+// Zuri Filter interns based on track i.e backend frontend
 const filterInterns = async (req, res) => {
   let filterValue;
   if (req.query.track) {
