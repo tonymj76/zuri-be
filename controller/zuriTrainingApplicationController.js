@@ -67,7 +67,7 @@ const createIntern = async (req, res) => {
     if (!recordSave) {
       return responseHandler(res, 'Unable to register application', 401, false);
     }
-    return responseHandler(res, 'Application Successfully Registered', 200, true);
+    return responseHandler(res, 'Application Successfully Registered', 200, true, recordSave);
   } catch (error) {
     return responseHandler(res, 'Inputs error', 500, false, error.message);
   }

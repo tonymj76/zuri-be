@@ -295,7 +295,7 @@ const filterMentorTrainingDataCSV = (req, res) => {
     }
   ];
 
-  ZuriTrainingMentorModel.find({ track: filterBy }).then((result) => downloadCSV(res, 'Zuri-training-interns.csv', fields, ZuriTrainingMentorModel)).catch((err) => {
+  ZuriTrainingMentorModel.find({ track: filterBy }).then((result) => downloadCSV(res, `${filterBy}-mentors-training-track.csv`, fields, ZuriTrainingMentorModel)).catch((err) => {
     responseHandler(res, 'Something went wrong', 500, false, err);
   });
 };
