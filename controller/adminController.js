@@ -101,22 +101,24 @@ const addAdmin = async (req, res) => {
     if (!adminAdded) {
       return responseHandler(res, 'Unable to create Admin', 401, false);
     }
+
+    return responseHandler(res, 'Admin created successfully', 200, true);
     // send admin login details
-    const link = `${process.env.ZURI_DEV_URL}/login`;
-    const details = {
-      email,
-      subject: 'ZURI Admin Account Details',
-      message: `<h5>Login Credentials<h5>
-                <p>Email: ${email}<p>
-                <p>Password: ${password}<p>
-                Click <a href=${link}>here</a> to login`
-    };
-    try {
-      await sendEmail(details);
-      return responseHandler(res, 'Admin created successfully', 200, true);
-    } catch (err) {
-      return responseHandler(res, err.message, 500, false);
-    }
+    // const link = `${process.env.ZURI_DEV_URL}/login`;
+    // const details = {
+    //   email,
+    //   subject: 'ZURI Admin Account Details',
+    //   message: `<h5>Login Credentials<h5>
+    //             <p>Email: ${email}<p>
+    //             <p>Password: ${password}<p>
+    //             Click <a href=${link}>here</a> to login`
+    // };
+    // try {
+    //   await sendEmail(details);
+    //   return responseHandler(res, 'Admin created successfully', 200, true);
+    // } catch (err) {
+    //   return responseHandler(res, err.message, 500, false);
+    // }
   } catch (error) {
     return responseHandler(res, error.message, 500, false);
   }
