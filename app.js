@@ -17,7 +17,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use('/cvDir', express.static(path.join(__dirname, 'cvDir')));
-app.use('/public', express.static(`${__dirname}/public`));
 
 app.use('/api/v1', adminRouter);
 app.use('/api/v1/internship', zuriInternshipRouter);
