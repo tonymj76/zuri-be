@@ -2,6 +2,7 @@
 /* eslint-disable new-cap */
 /* eslint-disable no-console */
 const { isEmpty, isEmail } = require('validator');
+const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Admin = require('../models/Admin');
@@ -9,6 +10,14 @@ const { JWTKey } = require('../config');
 const { responseHandler } = require('../utils/responseHandler');
 const { passwordHash } = require('../utils/password-hash');
 const sendEmail = require('../utils/send-email');
+
+const adminValidator = () => [
+  body('firstName').isString().not().isEmpty(),
+  body('lastName').isString().not().isEmpty(),
+  body('email').isEmail().not().isEmpty(),
+  body('role').isString().not().isEmpty(),
+  body('category').isString().not().isEmpty()
+];
 
 // Admin Login
 const login = (req, res) => {
@@ -63,6 +72,13 @@ const logout = (req, res) => {
 
 const addAdmin = async (req, res) => {
   try {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      const err = errors.array();
+      const message = `${err[0].msg} in ${err[0].param}`;
+      return responseHandler(res, message, 400);
+    }
+
     const {
       firstName, lastName, email, password, role, category
     } = req.body;
@@ -169,5 +185,6 @@ module.exports = {
   addAdmin,
   deleteAdmin,
   getAdmin,
-  getAllAdmin
+  getAllAdmin,
+  adminValidator
 };
