@@ -37,7 +37,7 @@ router.get('/mentors/csv', getZuriMentorCSV);
 router.get('/mentor/filter/csv/:filterBy', filterMentorTrainingDataCSV);
 
 // Intern routes
-router.get('/getZuriTraining', getZuriTraining);
+router.get('/all/interns', getZuriTraining);
 router.get('/intern/:firstName', findByNameIntern);
 router.get('/intern/filter/:filterBy', filterInternTrainingData);
 // intern csv route
