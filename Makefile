@@ -24,3 +24,7 @@ update:
 
 login:
 	curl -X POST -H "Content-Type: application/json" -d '{"email":"admin@example.com", "password":"password"}' http://localhost:5600/api/v1/auth
+logout:
+	curl -X GET -H "Content-Type: application/json" http://localhost:5600/api/v1/logout
+loginlive:
+	curl -X POST -H "Content-Type: application/json" -d '{"email":"admin@example.com", "password":"password"}' https://zuri-be.herokuapp.com/api/v1/auth

@@ -67,7 +67,7 @@ const login = (req, res) => {
 };
 
 const logout = (req, res) => {
-  responseHandler(res, 'No Logout');
+  responseHandler(res, 'logout successfully', 200, true);
 };
 
 const addAdmin = async (req, res) => {
