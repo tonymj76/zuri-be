@@ -1,4 +1,5 @@
 const { body, validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 const ZuriTrainingMentor = require('../models/ZuriTrainingMentorModel');
 const { responseHandler } = require('../utils/responseHandler');
 
@@ -118,5 +119,22 @@ module.exports = {
     }
   },
 
-  mentorTraningValidator,
+  getSingleMentorApplication: async (req, res, next) => {
+    const Mentor = ZuriTrainingMentor;
+    const mentorId = req.params.id;
+    if (!mongoose.isValidObjectId(mentorId)) {
+      return responseHandler(res, 'Invalid Id for a mentor', 400);
+    }
+    try {
+      const mentor = await Mentor.find({ _id: mentorId });
+      if (!mentor) {
+        return responseHandler(res, 'Mentor not found', 404);
+      }
+      return responseHandler(res, 'Mentor ', 200, true, { mentor });
+    } catch (err) {
+      return next(err);
+    }
+  },
+
+  mentorTraningValidator
 };
