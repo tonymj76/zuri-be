@@ -102,7 +102,7 @@ const addAdmin = async (req, res) => {
       return responseHandler(res, 'Unable to create Admin', 401, false);
     }
 
-    return responseHandler(res, 'Admin created successfully', 200, true);
+    return responseHandler(res, 'Admin created successfully', 200, true, adminAdded);
     // send admin login details
     // const link = `${process.env.ZURI_DEV_URL}/login`;
     // const details = {
