@@ -33,15 +33,15 @@ router.get('/mentor/applications', allApplication);
 router.get('/mentor/:firstName', findByNameMentor);
 router.get('/mentor/filter/:filterBy', filterMentorTrainingData);
 // mentor csv routes
-router.get('/mentors/csv', getZuriMentorCSV);
+router.get('/mentor/all/csv', getZuriMentorCSV);
 router.get('/mentor/filter/csv/:filterBy', filterMentorTrainingDataCSV);
 
 // Intern routes
-router.get('/all/interns', getZuriTraining);
+router.get('/intern/all', getZuriTraining);
 router.get('/intern/:firstName', findByNameIntern);
 router.get('/intern/filter/:filterBy', filterInternTrainingData);
 // intern csv route
-router.get('/getinterns/csv', getZuriTrainingCSV);
+router.get('/intern/all/csv', getZuriTrainingCSV);
 router.get('/intern/filter/csv/:filterBy', filterInternTrainingDataCSV);
 
 module.exports = router;
