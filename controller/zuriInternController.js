@@ -49,10 +49,7 @@ const getAllInterns = async (req, res) => {
   } catch (err) {
     return responseHandler(res, 'Error', 500, false, err);
   }
-}
-
-
-
+};
 
 module.exports = {
   zuriInternValidationRules,
