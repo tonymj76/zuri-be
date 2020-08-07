@@ -14,7 +14,7 @@ const mentorTraningValidator = () => [
   body('dob').isString().not().isEmpty(),
   body('stateOfResidence').isString().not().isEmpty(),
   body('cvLink').optional().isURL(),
-  body('intrest').isString().not().isEmpty(),
+  body('interest').isString().not().isEmpty(),
   body('phoneNumber').isMobilePhone().not().isEmpty()
 ];
 
