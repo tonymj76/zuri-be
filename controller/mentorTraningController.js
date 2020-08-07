@@ -126,7 +126,7 @@ module.exports = {
       return responseHandler(res, 'Invalid Id for a mentor', 400);
     }
     try {
-      const mentor = await Mentor.find({ _id: mentorId });
+      const mentor = await Mentor.findOne({ _id: mentorId });
       if (!mentor) {
         return responseHandler(res, 'Mentor not found', 404);
       }
