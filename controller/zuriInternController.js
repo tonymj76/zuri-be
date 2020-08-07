@@ -29,12 +29,12 @@ const zuriInternApplication = async (req, res, next) => {
   const { email } = req.body;
   try {
     // check if the email is already in use
-    const intern = await Intern.findOne({ email });
+    const intern = await ZuriIntern.findOne({ email });
     if (intern) {
       return responseHandler(res, 'Email address already used for application', 400, true);
     }
     // create the new intern application
-    let newIntern = new Intern(req.body);
+    let newIntern = new ZuriIntern(req.body);
     newIntern = await newIntern.save();
     return responseHandler(res, ' Application is successful', 201, true, { intern: newIntern });
   } catch (err) {

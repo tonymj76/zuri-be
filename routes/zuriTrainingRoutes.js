@@ -5,7 +5,7 @@ const {
 } = require('../controller/zuriTrainingApplicationController');
 
 const {
-  createApplication, declineApplication, acceptApplication, allApplication
+  createApplication, declineApplication, acceptApplication, allApplication, mentorTraningValidator
 } = require('../controller/mentorTraningController');
 
 const {
@@ -18,15 +18,15 @@ router.post('/zuri/training/application', internApplicationValidationRules(), cr
 
 // mentor routes
 
-router.post('/mentor/apply', createApplication);
+router.post('/mentor/apply', mentorTraningValidator(), createApplication);
 router.patch('/mentor/:id/decline', declineApplication);
 router.patch('/mentor/:id/accept', acceptApplication);
 router.get('/mentor/applications', allApplication);
-router.get('/mentor/:firstName', findByNameMentor)
-router.get('/mentor/filter/:filterBy', filterMentorTrainingData)
+router.get('/mentor/:firstName', findByNameMentor);
+router.get('/mentor/filter/:filterBy', filterMentorTrainingData);
 
 // Intern routes
-router.get('/getZuriTraining', getZuriTraining);
-router.get('/intern/:firstName', findByNameIntern)
-router.get('/intern/filter/:filterBy', filterInternTrainingData)
+router.get('/intern/all', getZuriTraining);
+router.get('/intern/:firstName', findByNameIntern);
+router.get('/intern/filter/:filterBy', filterInternTrainingData);
 module.exports = router;
