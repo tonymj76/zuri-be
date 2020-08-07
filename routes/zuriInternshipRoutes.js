@@ -1,9 +1,12 @@
 const express = require('express');
 
 const router = express.Router();
+
 const {
-  getAllInterns,
-  filterInterns
+  filterInterns,
+  zuriInternValidationRules,
+  zuriInternApplication,
+  getAllInterns
 } = require('../controller/zuriInternController');
 
 const {
@@ -17,8 +20,12 @@ const {
 router.post('/mentors/apply', applicationValidationRules(), internshipMentorApplication);
 router.get('/mentors', getAllMentorApplication);
 router.get('/mentors/:id', getSingleMentorApplication);
-router.get('/intern/track', filterInterns);
+
+
+// Zuri Intern routes
+router.post('/intern/apply', zuriInternValidationRules(), zuriInternApplication);
 router.get('/intern', getAllInterns);
+router.get('/intern/track', filterInterns);
 
 
 module.exports = router;
