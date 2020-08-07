@@ -1,4 +1,5 @@
 const express = require('express');
+const { authourizeSuperadmin } = require('../middleware/auth');
 
 const {
   login,
@@ -7,7 +8,7 @@ const {
   getAllAdmin,
   addAdmin,
   deleteAdmin,
-  searchMentorsWithFilter
+  adminValidator
 } = require('../controller/adminController');
 const {
   topAnalytics,
@@ -20,7 +21,7 @@ const router = express.Router();
 // Admin routes
 router.post('/auth', login);
 router.get('/logout', logout);
-router.post('/superadmin/create/admin', addAdmin);
+router.post('/superadmin/create/admin', adminValidator(), addAdmin);
 router.delete('/superadmin/delete/:adminId', deleteAdmin);
 
 router.get('/analytics/toplevel', topAnalytics);
