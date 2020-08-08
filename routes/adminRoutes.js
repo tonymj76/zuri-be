@@ -2,7 +2,13 @@ const express = require('express');
 const { authourizeSuperadmin } = require('../middleware/auth');
 
 const {
-  login, logout, getAdmin, getAllAdmin, addAdmin, deleteAdmin, adminValidator
+  login,
+  logout,
+  getAdmin,
+  getAllAdmin,
+  addAdmin,
+  deleteAdmin,
+  adminValidator
 } = require('../controller/adminController');
 const {
   topAnalytics,
@@ -28,6 +34,7 @@ router.get(
   '/analytics/lowerlevel/intern-mentor-tracks',
   internMentorTrackStats
 );
+router.get('/search/mentors/:filter/:term', searchMentorsWithFilter);
 router.get('/admin/:id', getAdmin);
 router.get('/superadmin/all/admins', getAllAdmin);
 

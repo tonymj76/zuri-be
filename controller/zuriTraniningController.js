@@ -7,41 +7,55 @@ const getZuriTraining = async (req, res) => {
   // fetch all zuri training data
   // by @ajibadeabd
   const ZuriTraining = await ZuriTrainingModel.find({}, { __v: 0 });
-  if (!ZuriTraining) { responseHandler(res, 'error occur while fecting zuri Traning data'); } else { responseHandler(res, 'all zuritraining data fetch', 200, true, { ZuriTraining }); }
+  if (!ZuriTraining) {
+    responseHandler(res, 'error occur while fecting zuri Traning data');
+  } else {
+    responseHandler(res, 'all zuritraining data fetch', 200, true, {
+      ZuriTraining
+    });
+  }
 };
 
 const findByNameIntern = (req, res) => {
-  ZuriTrainingModel.find({ firstName: req.params.firstName }).then((result) => {
-    responseHandler(res, 'Operation successful', 200, true, result);
-  }).catch((err) => {
-    responseHandler(res, 'Something went wrong', 500, false, err);
-  });
+  ZuriTrainingModel.find({ firstName: req.params.firstName })
+    .then((result) => {
+      responseHandler(res, 'Operation successful', 200, true, result);
+    })
+    .catch((err) => {
+      responseHandler(res, 'Something went wrong', 500, false, err);
+    });
 };
 
 const filterInternTrainingData = (req, res) => {
   const filterBy = req.params.filterBy.toLowerCase();
-  ZuriTrainingModel.find({ track: filterBy }).then((result) => {
-    responseHandler(res, 'Operation successful', 200, true, result);
-  }).catch((err) => {
-    responseHandler(res, 'Something went wrong', 500, false, err);
-  });
+  ZuriTrainingModel.find({ track: filterBy })
+    .then((result) => {
+      responseHandler(res, 'Operation successful', 200, true, result);
+    })
+    .catch((err) => {
+      responseHandler(res, 'Something went wrong', 500, false, err);
+    });
 };
 
 const findByNameMentor = (req, res) => {
-  ZuriTrainingMentorModel.find({ firstName: req.params.firstName }).then((result) => {
-    responseHandler(res, 'Operation successful', 200, true, result);
-  }).catch((err) => {
-    responseHandler(res, 'Something went wrong', 500, false, err);
-  });
+  ZuriTrainingMentorModel.find({ firstName: req.params.firstName })
+    .then((result) => {
+      responseHandler(res, 'Operation successful', 200, true, result);
+    })
+    .catch((err) => {
+      responseHandler(res, 'Something went wrong', 500, false, err);
+    });
 };
 
 const filterMentorTrainingData = (req, res) => {
   const filterBy = req.params.filterBy.toLowerCase();
-  ZuriTrainingMentorModel.find({ track: filterBy }).then((result) => {
-    responseHandler(res, 'Operation successful', 200, true, result);
-  }).catch((err) => {
-    responseHandler(res, 'Something went wrong', 500, false, err);
-  });
+  ZuriTrainingMentorModel.find({ track: filterBy })
+    .then((result) => {
+      responseHandler(res, 'Operation successful', 200, true, result);
+    })
+    .catch((err) => {
+      responseHandler(res, 'Something went wrong', 500, false, err);
+    });
 };
 
 // all csv exports function
@@ -167,9 +181,16 @@ const getZuriMentorCSV = (req, res) => {
     }
   ];
 
-  ZuriTrainingMentorModel.find({}, { __v: 0 }).then((result) => downloadCSV(res, 'Zuri-training-interns.csv', fields, ZuriTrainingMentorModel)).catch((err) => {
-    responseHandler(res, 'Something went wrong', 500, false, err);
-  });
+  ZuriTrainingMentorModel.find({}, { __v: 0 })
+    .then((result) => downloadCSV(
+      res,
+      'Zuri-training-interns.csv',
+      fields,
+      ZuriTrainingMentorModel
+    ))
+    .catch((err) => {
+      responseHandler(res, 'Something went wrong', 500, false, err);
+    });
 };
 
 const filterInternTrainingDataCSV = (req, res) => {
@@ -229,9 +250,11 @@ const filterInternTrainingDataCSV = (req, res) => {
     }
   ];
 
-  ZuriTrainingModel.find({ track: filterBy }).then((result) => downloadCSV(res, `${filterBy}-interns-training-track.csv`, fields, result)).catch((err) => {
-    responseHandler(res, 'Something went wrong', 500, false, err);
-  });
+  ZuriTrainingModel.find({ track: filterBy })
+    .then((result) => downloadCSV(res, `${filterBy}-interns-training-track.csv`, fields, result))
+    .catch((err) => {
+      responseHandler(res, 'Something went wrong', 500, false, err);
+    });
 };
 
 const filterMentorTrainingDataCSV = (req, res) => {
@@ -295,9 +318,16 @@ const filterMentorTrainingDataCSV = (req, res) => {
     }
   ];
 
-  ZuriTrainingMentorModel.find({ track: filterBy }).then((result) => downloadCSV(res, `${filterBy}-mentors-training-track.csv`, fields, ZuriTrainingMentorModel)).catch((err) => {
-    responseHandler(res, 'Something went wrong', 500, false, err);
-  });
+  ZuriTrainingMentorModel.find({ track: filterBy })
+    .then((result) => downloadCSV(
+      res,
+      `${filterBy}-mentors-training-track.csv`,
+      fields,
+      ZuriTrainingMentorModel
+    ))
+    .catch((err) => {
+      responseHandler(res, 'Something went wrong', 500, false, err);
+    });
 };
 
 module.exports = {

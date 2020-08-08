@@ -2,22 +2,15 @@
 /* eslint-disable new-cap */
 /* eslint-disable no-console */
 const { isEmpty, isEmail } = require('validator');
-const { body, validationResult } = require('express-validator');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const Admin = require('../models/Admin');
+const Admins = require('../models/Admin');
 const { JWTKey } = require('../config');
 const { responseHandler } = require('../utils/responseHandler');
 const { passwordHash } = require('../utils/password-hash');
 const sendEmail = require('../utils/send-email');
-
-const adminValidator = () => [
-  body('firstName').isString().not().isEmpty(),
-  body('lastName').isString().not().isEmpty(),
-  body('email').isEmail().not().isEmpty(),
-  body('role').isString().not().isEmpty(),
-  body('category').isString().not().isEmpty()
-];
+const Admin = require('../models/Admin');
+const ZuriTrainingMentor = require('../models/ZuriTrainingMentorModel');
 
 // Admin Login
 const login = (req, res) => {
@@ -28,42 +21,41 @@ const login = (req, res) => {
   if (!isEmail(email)) {
     responseHandler(res, 'Please enter a valid email');
   }
-  Admin.findOne({ email }).then((admin) => {
-    if (!admin) {
-      responseHandler(res, 'Email does not exist in our record');
-      return;
-    }
-    bcrypt.compare(password, admin.password).then(
-      (valid) => {
-        if (!valid) {
-          responseHandler(res, 'Please enter a valid password');
-        }
-        const token = jwt.sign(
-          { adminId: admin._id },
-          JWTKey,
-          { expiresIn: '24h' }
-        );
-        const { name, role, category } = admin;
-        responseHandler(res, 'token gen and successful login', 200, true, {
-          name,
-          email,
-          role,
-          category,
-          authorization: { token }
-        });
+  Admins.findOne({ email })
+    .then((admin) => {
+      if (!admin) {
+        responseHandler(res, 'Email does not exist in our record');
+        return;
       }
-    ).catch(
-      (err) => {
-        res.status(501).json({
-          error: err
+      bcrypt
+        .compare(password, admin.password)
+        .then((valid) => {
+          if (!valid) {
+            responseHandler(res, 'Please enter a valid password');
+          }
+          const token = jwt.sign({ adminId: admin._id }, JWTKey, {
+            expiresIn: '24h'
+          });
+          const { name, role, category } = admin;
+          responseHandler(res, 'token gen and successful login', 200, true, {
+            name,
+            email,
+            role,
+            category,
+            authorization: { token }
+          });
+        })
+        .catch((err) => {
+          res.status(501).json({
+            error: err
+          });
         });
-      }
-    );
-  }).catch((err) => {
-    res.status(500).json({
-      error: err
+    })
+    .catch((err) => {
+      res.status(500).json({
+        error: err
+      });
     });
-  });
 };
 
 const logout = (req, res) => {
@@ -72,20 +64,18 @@ const logout = (req, res) => {
 
 const addAdmin = async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      const err = errors.array();
-      const message = `${err[0].msg} in ${err[0].param}`;
-      return responseHandler(res, message, 400);
-    }
-
     const {
       firstName, lastName, email, password, role, category
     } = req.body;
 
     const adminExists = await Admin.findOne({ email });
     if (adminExists) {
-      return responseHandler(res, 'Admin with that email already exist', 401, false);
+      return responseHandler(
+        res,
+        'Admin with that email already exist',
+        401,
+        false
+      );
     }
 
     const hashedPassword = await passwordHash(password);
@@ -181,6 +171,17 @@ const getAdmin = (req, res) => {
     });
 };
 
+const searchMentorsWithFilter = (req, res) => {
+  const { filter, term } = req.params; // track,gender,name
+
+  ZuriTrainingMentor.find({})
+    .then((data) => {
+      const filtered = data.filter((mentor) => mentor[filter].includes(term));
+      return responseHandler(res, 'Success', 200, true, filtered);
+    })
+    .catch((err) => responseHandler(res, 'Failed', 403, false, null));
+};
+
 module.exports = {
   login,
   logout,
@@ -188,5 +189,5 @@ module.exports = {
   deleteAdmin,
   getAdmin,
   getAllAdmin,
-  adminValidator
+  searchMentorsWithFilter
 };
